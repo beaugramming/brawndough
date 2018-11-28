@@ -60,13 +60,12 @@
   "devDependencies": {
     "eslint": "^4.19.1",
     "ethjs-util": "^0.1.4",
+    "lite-server": "^2.4.0",
     "truffle": "^4.1.11",
     "truffle-flattener": "^1.2.5",
-    "lite-server": "^2.3.0",
     "web3-utils": "^1.0.0-beta.34"
   },
   "dependencies": {
     "@0xcert/ethereum-erc721": "^1.10.0"
   }
-
 }

@@ -19,6 +19,7 @@ Install these prerequisites to follow along with the tutorial. See free video tu
 $ cd brawndough
 $ npm install @0xcert/ethereum-xcert
 $ npm install
+$ npm install lite-server --save-dev
 $ npm run compile
 ```
 ## Step 3. Start Ganache
