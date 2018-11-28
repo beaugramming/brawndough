@@ -1,6 +1,6 @@
 pragma solidity ^0.4.23;
 
-import "@0xcert/ethereum-utils/contracts/ownership/Claimable.sol";
+import "./NFToken.sol";
 import "../tokens/BurnableXcert.sol";
 import "./Xcert.sol";
 
@@ -46,18 +46,12 @@ contract Brawndough is BurnableXcert {
         emit brawndoughEvent(_owner);
     }
 
-    // function transferBrawndough(address _owner, uint256 _tokenId)
-    // public
-    // {
-    //     super._transferOwnership(_owner);
-    //     emit brawndoughEvent(_owner);
-    // }
-
-    // function claimBrawndough(address _owner, uint256 _tokenId)
-    // public
-    // {
-    //     super._burn(_owner, _tokenId);
-    //     emit brawndoughEvent(_owner);
-    // }
+    function transferBrawndough(address _owner, address _to, uint256 _tokenId)
+    public
+    {
+        super._approve(_to, _tokenId);
+        super._safeTransferFrom(_owner, _to, _tokenId);
+        emit brawndoughEvent(_owner);
+    }
 
 }

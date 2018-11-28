@@ -132,33 +132,24 @@ App = {
       App.contracts.Brawndough.deployed().then(function(instance) {
         return instance.destroyBrawndough(App.account, tokenId, { from: App.account });
       }).then(function(result) {
+        App.render();
       }).catch(function(err) {
         console.error(err);
       });
     }
 
-    // transferBrawndough: function() {
-    //   var tokenId = $('#tokenIdDestroy').val();
-    //   var address = $('#address').val();
+    transferBrawndough: function() {
+      var tokenId = $('#tokenIdDestroy').val();
+      var address = $('#address').val();
 
-    //   App.contracts.Brawndough.deployed().then(function(instance) {
-    //     return instance.transferBrawndough(App.account, uri, cost, { from: App.account });
-    //   }).then(function(result) {
-    //   }).catch(function(err) {
-    //     console.error(err);
-    //   });
-    // },
+      App.contracts.Brawndough.deployed().then(function(instance) {
+        return instance.transferBrawndough(App.account, address, tokenId, { from: App.account });
+      }).then(function(result) {
+      }).catch(function(err) {
+        console.error(err);
+      });
+    },
 
-    // claimBrawndough: function() {
-    //   var tokenId = $('#tokenIdClaim').val();
-
-    //   App.contracts.Brawndough.deployed().then(function(instance) {
-    //     return instance.claimBrawndough(App.account, uri, cost, { from: App.account });
-    //   }).then(function(result) {
-    //   }).catch(function(err) {
-    //     console.error(err);
-    //   });
-    // },
 
 };
   
