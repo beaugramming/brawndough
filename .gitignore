@@ -4,4 +4,5 @@ node_modules
 build
 .idea/
 build/
+assets/
 truffle-config.js
