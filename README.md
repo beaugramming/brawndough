@@ -1,5 +1,5 @@
 # brawndough
-Trufflebox for ERC1155 Task Mutilator
+Trufflebox for ERC721 Task Mutilator
 
 #Installation Steps
 Follow the steps below to download, install, and run this project.
