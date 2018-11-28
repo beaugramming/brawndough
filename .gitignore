@@ -1,0 +1,7 @@
+.DS_Store
+.node*
+node_modules
+build
+.idea/
+build/
+truffle-config.js
