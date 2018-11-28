@@ -30,6 +30,8 @@ App = {
         App.contracts.Brawndough.setProvider(App.web3Provider);
 
         App.listenForEvents();
+
+        App.render();
       });
     },
 
@@ -67,19 +69,19 @@ App = {
         return brawndoughInstance.brawndoughCount();
       }).then(function(brawndoughCount) {
         var electrolightResults = $("#electrolightResults");
-        electrolightResults.empty()
+        electrolightResults.empty();
 
         //List out the tokenIds
         var tokenIdOptionsTransfer = $("#tokenIdTransfer");
-        tokenIdOptionsTransfer.empty()
+        tokenIdOptionsTransfer.empty();
 
         //List out the tokenIds
         var tokenIdOptionsClaim = $("#tokenIdClaim");
-        tokenIdOptionsClaim.empty()
+        tokenIdOptionsClaim.empty();
 
         //List out the tokenIds
         var tokenIdOptionsDestroy = $("#tokenIdDestroy");
-        tokenIdOptionsDestroy.empty()
+        tokenIdOptionsDestroy.empty();
 
         for (var i = 1; i <= brawndoughCount; i++) {
           brawndoughInstance.electrolights(i).then(function(electrolight) {
@@ -93,15 +95,15 @@ App = {
             electrolightResults.append(electrolightTemplate);
 
             //Append Token ID options for selecting the Token ID to transfer, claim or destroy
-            var tokenId = "<option value='" + id + "' >" + id + "</ option>"
+            var tokenId = "<option value='" + id + "' >" + id + "</ option>";
             tokenIdOptionsTransfer.append(tokenId);
 
             //Append Token ID options for selecting the Token ID to transfer, claim or destroy
-            var tokenId = "<option value='" + id + "' >" + id + "</ option>"
+            var tokenId = "<option value='" + id + "' >" + id + "</ option>";
             tokenIdOptionsClaim.append(tokenId);
 
             //Append Token ID options for selecting the Token ID to transfer, claim or destroy
-            var tokenId = "<option value='" + id + "' >" + id + "</ option>"
+            var tokenId = "<option value='" + id + "' >" + id + "</ option>";
             tokenIdOptionsDestroy.append(tokenId);
 
           });
@@ -118,29 +120,7 @@ App = {
       App.contracts.Brawndough.deployed().then(function(instance) {
         return instance.mintBrawndough(App.account, uri, cost, { from: App.account });
       }).then(function(result) {
-      }).catch(function(err) {
-        console.error(err);
-      });
-    },
-
-    transferBrawndough: function() {
-      var tokenId = $('#tokenIdDestroy').val();
-      var address = $('#address').val();
-
-      App.contracts.Brawndough.deployed().then(function(instance) {
-        return instance.transferBrawndough(App.account, uri, cost, { from: App.account });
-      }).then(function(result) {
-      }).catch(function(err) {
-        console.error(err);
-      });
-    },
-
-    claimBrawndough: function() {
-      var tokenId = $('#tokenIdClaim').val();
-
-      App.contracts.Brawndough.deployed().then(function(instance) {
-        return instance.claimBrawndough(App.account, uri, cost, { from: App.account });
-      }).then(function(result) {
+        App.render();
       }).catch(function(err) {
         console.error(err);
       });
@@ -156,6 +136,30 @@ App = {
         console.error(err);
       });
     }
+
+    // transferBrawndough: function() {
+    //   var tokenId = $('#tokenIdDestroy').val();
+    //   var address = $('#address').val();
+
+    //   App.contracts.Brawndough.deployed().then(function(instance) {
+    //     return instance.transferBrawndough(App.account, uri, cost, { from: App.account });
+    //   }).then(function(result) {
+    //   }).catch(function(err) {
+    //     console.error(err);
+    //   });
+    // },
+
+    // claimBrawndough: function() {
+    //   var tokenId = $('#tokenIdClaim').val();
+
+    //   App.contracts.Brawndough.deployed().then(function(instance) {
+    //     return instance.claimBrawndough(App.account, uri, cost, { from: App.account });
+    //   }).then(function(result) {
+    //   }).catch(function(err) {
+    //     console.error(err);
+    //   });
+    // },
+
 };
   
   $(function() {
