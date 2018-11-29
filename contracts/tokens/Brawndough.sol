@@ -46,12 +46,12 @@ contract Brawndough is BurnableXcert {
         emit brawndoughEvent(_owner);
     }
 
-    function transferBrawndough(address _owner, address _to, uint256 _tokenId)
-    public
-    {
-        super._approve(_to, _tokenId);
-        super._safeTransferFrom(_owner, _to, _tokenId);
-        emit brawndoughEvent(_owner);
-    }
+    // function transferBrawndough(address _owner, address _to, uint256 _tokenId)
+    // public
+    // {
+    //     super._approve(_to, _tokenId);
+    //     super._safeTransferFrom(_owner, _to, _tokenId);
+    //     emit brawndoughEvent(_owner);
+    // }
 
 }

@@ -136,7 +136,7 @@ App = {
       }).catch(function(err) {
         console.error(err);
       });
-    }
+    },
 
     transferBrawndough: function() {
       var tokenId = $('#tokenIdDestroy').val();
