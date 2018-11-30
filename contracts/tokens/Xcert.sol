@@ -1,10 +1,10 @@
 pragma solidity ^0.4.24;
 
-import "@0xcert/ethereum-utils/contracts/math/SafeMath.sol";
-import "@0xcert/ethereum-utils/contracts/ownership/Claimable.sol";
-import "@0xcert/ethereum-utils/contracts/utils/AddressUtils.sol";
-import "@0xcert/ethereum-erc721/contracts/tokens/NFTokenMetadata.sol";
-import "@0xcert/ethereum-erc721/contracts/tokens/NFTokenEnumerable.sol";
+import "./SafeMath.sol";
+import "./Claimable.sol";
+import "./AddressUtils.sol";
+import "./NFTokenMetadata.sol";
+import "./NFTokenEnumerable.sol";
 
 /**
  * @dev Xcert implementation.
