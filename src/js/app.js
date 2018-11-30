@@ -2,7 +2,6 @@ App = {
   web3Provider: null,
   contracts: {},
   account: '0x0',
-  hasVoted: false,
 
   init: function() {
     return App.initWeb3();
@@ -68,59 +67,51 @@ App = {
         brawndoughInstance = instance;
         return brawndoughInstance.brawndoughCount();
       }).then(function(brawndoughCount) {
-        var electrolightResults = $("#electrolightResults");
+        let electrolightResults = $("#electrolightResults");
         electrolightResults.empty();
 
-        //List out the tokenIds
-        var tokenIdOptionsTransfer = $("#tokenIdTransfer");
+          //List out the tokenIds
+        let tokenIdOptionsTransfer = $("#tokenIdTransfer");
         tokenIdOptionsTransfer.empty();
 
         //List out the tokenIds
-        var tokenIdOptionsClaim = $("#tokenIdClaim");
+        let tokenIdOptionsClaim = $("#tokenIdClaim");
         tokenIdOptionsClaim.empty();
 
         //List out the tokenIds
-        var tokenIdOptionsDestroy = $("#tokenIdDestroy");
+        let tokenIdOptionsDestroy = $("#tokenIdDestroy");
         tokenIdOptionsDestroy.empty();
 
-        for (var i = 1; i <= brawndoughCount; i++) {
+        for (let i = 0; i <= brawndoughCount; i++) {
           brawndoughInstance.electrolights(i).then(function(electrolight) {
-            var address = electrolight[0];
-            var id = electrolight[1];
-            var description = electrolight[2];
-            var cost = electrolight[3];
-  
+            let address = electrolight[0];
+            let id = electrolight[1];
+            let description = electrolight[2];
+            let cost = electrolight[3];
+
             // Append Container struct items to electrolight board of nft tokens
-            var electrolightTemplate = "<tr><th>" + address + "</th><td>" + id + "</td><td>" + description + "</td><td>" + cost
+            let electrolightTemplate = "<tr><th>" + address + "</th><td>" + id + "</td><td>" + description + "</td><td>" + cost
             electrolightResults.append(electrolightTemplate);
 
             //Append Token ID options for selecting the Token ID to transfer, claim or destroy
-            var tokenId = "<option value='" + id + "' >" + id + "</ option>";
+            let tokenId = "<option value='" + id + "' >" + id + "</ option>"
             tokenIdOptionsTransfer.append(tokenId);
-
-            //Append Token ID options for selecting the Token ID to transfer, claim or destroy
-            var tokenId = "<option value='" + id + "' >" + id + "</ option>";
             tokenIdOptionsClaim.append(tokenId);
-
-            //Append Token ID options for selecting the Token ID to transfer, claim or destroy
-            var tokenId = "<option value='" + id + "' >" + id + "</ option>";
             tokenIdOptionsDestroy.append(tokenId);
-
           });
         }
         }).catch(function(error) {
         console.warn(error);
       });
     },
-  
-    mintBrawndough: function() {
-      var uri = $('#uri').val();
-      var cost = $('#cost').val();
 
+    mintBrawndough: function() {
+      let uri = $('#uri').val();
+      let cost = $('#cost').val();
+      
       App.contracts.Brawndough.deployed().then(function(instance) {
         return instance.mintBrawndough(App.account, uri, cost, { from: App.account });
       }).then(function(result) {
-        App.render();
       }).catch(function(err) {
         console.error(err);
       });
@@ -132,14 +123,13 @@ App = {
       App.contracts.Brawndough.deployed().then(function(instance) {
         return instance.destroyBrawndough(App.account, tokenId, { from: App.account });
       }).then(function(result) {
-        App.render();
       }).catch(function(err) {
         console.error(err);
       });
     },
 
     transferBrawndough: function() {
-      var tokenId = $('#tokenIdDestroy').val();
+      var tokenId = $('#tokenIdTransfer').val();
       var address = $('#address').val();
 
       App.contracts.Brawndough.deployed().then(function(instance) {
@@ -149,7 +139,6 @@ App = {
         console.error(err);
       });
     },
-
 
 };
   

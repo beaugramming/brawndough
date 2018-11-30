@@ -34,64 +34,25 @@ contract Brawndough is BurnableXcert {
     public
     {
         brawndoughCount ++;
-        newEntity(brawndoughCount, brawndoughCount);
-        //Will not need once deleteEntity is fixed
         existingTokenId.push(brawndoughCount);
         super._mint(_owner, brawndoughCount);
         super._setTokenUri(brawndoughCount, _uri);
         electrolights[brawndoughCount] = Electrolight(_owner, brawndoughCount, _uri, _cost);
         emit brawndoughEvent(_owner);
-        // existingTokenId.push(brawndoughCount);
-        // electrolights[brawndoughCount].tokenIdentifier = existingTokenId.push(brawndoughCount);
+        return newEntity(brawndoughCount, brawndoughCount);
     }
 
     function destroyBrawndough(address _owner, uint256 _tokenId)
     public
     {
         require(existingTokenId[_tokenId]>0, "Not a valid tokenID");
-        // delete existingTokenId[_tokenId];
+        delete existingTokenId[_tokenId];
         super._burn(_owner, _tokenId);
         emit brawndoughEvent(_owner);
-        //Fix
-        // deleteEntity(_tokenId);
+        
     }
 
-    // https://ethereum.stackexchange.com/questions/13167/are-there-well-solved-and-simple-storage-patterns-for-solidity
-    //https://medium.com/@robhitchens/solidity-crud-part-2-ed8d8b4f74ec
-    function isEntity(uint256 _tokenId) public view returns(bool isIndeed) {
-        if(existingTokenId.length == 0) return false;
-        return (existingTokenId[electrolights[_tokenId].tokenIdentifier] == _tokenId);
-    }
-
-    function getEntityCount() public view returns(uint entityCount) {
-        return existingTokenId.length;
-    }
-
-    function newEntity(uint256 _tokenId, uint256 tokenIdentifier) public returns(bool success) {
-        if(isEntity(_tokenId)) revert();
-        electrolights[_tokenId].tokenIdentifier = tokenIdentifier;
-        electrolights[_tokenId].tokenIdentifier = existingTokenId.push(_tokenId) - 1;
-        return true;
-    }
-
-    //Fix
-    function deleteEntity(uint256 _tokenId) public returns(bool success) {
-        if(!isEntity(_tokenId)) revert();
-        uint256 rowToDelete = electrolights[_tokenId].tokenIdentifier;
-        uint256 keyToMove = existingTokenId[existingTokenId.length-1];
-        existingTokenId[rowToDelete] = keyToMove;
-        electrolights[keyToMove].tokenIdentifier = rowToDelete;
-        existingTokenId.length--;
-        return true;
-    }
-
-    // function updateEntity(uint256 _tokenId, uint tokenIdentifier) public returns(bool success) {
-    //     if(!isEntity(existingTokenId)) revert();
-    //     electrolights[existingTokenId].tokenIdentifier = tokenIdentifier;
-    //     return true;
-    // }
-
-      // function displayBrawndough()
+    // function displayBrawndough()
     // public
     // returns(bytes32) 
     // { 
@@ -99,6 +60,43 @@ contract Brawndough is BurnableXcert {
     //         return electrolights[existingTokenId[i]];
     //     }
     // }
+
+    // https://ethereum.stackexchange.com/questions/13167/are-there-well-solved-and-simple-storage-patterns-for-solidity
+    //https://medium.com/@robhitchens/solidity-crud-part-2-ed8d8b4f74ec
+    function isEntity(unit256 _tokenId) public view returns(bool isIndeed) {
+        if(entityList.length == 0) return false;
+        return (existingTokenId[electrolights[entityId].tokenIdentifier] == entityId);
+    }
+
+    function getEntityCount() public view returns(uint entityCount) {
+        return entityId.length;
+    }
+
+    function newEntity(uint256 _tokenId, uint256 tokenIdentifier) public returns(bool success) {
+        if(isEntity(_tokenId)) revert();
+        electrolights[_tokenId].tokenIdentifier = tokenIdentifier;
+        electrolights[_tokenId].tokenIdentifier = entityList.push(_tokenId) - 1;
+        return true;
+    }
+
+    function updateEntity(uint256 _tokenId, uint tokenIdentifier) public returns(bool success) {
+        if(!isEntity(existingTokenId)) revert();
+        electrolights[existingTokenId].tokenIdentifier = tokenIdentifier;
+        return true;
+    }
+
+    function deleteEntity(uint256 tokenId) public returns(bool success) {
+        if(!isEntity(existingTokenId)) revert();
+        uint rowToDelete = electrolights[existingTokenId].listPointer;
+        address keyToMove   = entityList[entityList.length-1];
+        entityList[rowToDelete] = keyToMove;
+        electrolights[keyToMove].listPointer = rowToDelete;
+        entityList.length--;
+        return true;
+    }
+
+
+
 
     // function transferBrawndough(address _owner, address _to, uint256 _tokenId)
     // public
