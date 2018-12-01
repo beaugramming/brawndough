@@ -24,7 +24,7 @@
             <h1 class="text-center">Create Brawndough</h1>
             <form onSubmit="App.mintBrawndough(); return false;">
               <div class="form-group">
-                <label for="mintName">Mint Brawndough ERC1155 NFT Coin</label>
+                <label for="mintName">Mint Brawndough ERC721 NFT Coin</label>
                 <!--select class="form-control" id="candidatesSelect">-->
                 <!--/select>-->
               </div>
@@ -40,10 +40,11 @@
               <hr />
             </form>
             <p id="accountAddress" class="text-center"></p>
-            <p id="brawndoughSymbol" class="text-center"></p>
+            <p id="existingTokens" class="text-center"></p>
+            <p id="existingTokensCount" class="text-center"></p>
             <form onSubmit="App.transferBrawndough(); return false;">
               <div class="form-group">
-                <label for="transfer">Transfer Brawndough ERC1155 NFT Coin by selecting Token ID and Address to Send to:</label>
+                <label for="transfer">Transfer Brawndough ERC721 NFT Coin by selecting Token ID and Address to Send to:</label>
                 <br></br>
                 <label for ="transferToken">Enter the Token ID as a positive integer:</label>
                 <select class="form-control" id="tokenIdTransfer">

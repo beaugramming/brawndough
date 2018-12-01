@@ -72,4 +72,11 @@ contract Brawndough is ERC721, Xcert, BurnableXcert  {
         emit brawndoughEvent(_owner);
     }
 
+    // https://ethereum.stackexchange.com/questions/3114/calling-public-array-of-structs-using-web3
+    // https://ethereum.stackexchange.com/questions/25954/web3-accessing-multiple-return-values
+    function getToken(uint256 index) public view returns(uint256, uint256) {
+        uint256 entityCount = getEntityCount();
+        return (existingTokenArray[index], entityCount);
+    }
+
 }
