@@ -82,7 +82,7 @@ App = {
         let tokenIdOptionsDestroy = $("#tokenIdDestroy");
         tokenIdOptionsDestroy.empty();
 
-        for (let i = 0; i <= brawndoughCount; i++) {
+        for (let i = 1; i <= brawndoughCount; i++) {
           brawndoughInstance.electrolights(i).then(function(electrolight) {
             let address = electrolight[0];
             let id = electrolight[1];
