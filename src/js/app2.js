@@ -62,11 +62,15 @@ App = {
         }
       });
   
-      // Load contract data
+      //Load contract data
       App.contracts.Brawndough.deployed().then(function(instance) {
         brawndoughInstance = instance;
-        return brawndoughInstance.brawndoughCount();
-      }).then(function(brawndoughCount) {
+        return brawndoughInstance.getToken(0, { from: App.account });
+      }).then(function(getToken) {
+        let [notUsedToken, counter] = getToken;
+        $("#existingTokens").html("Your First Existing token: " + notUsedToken);
+        $("#existingTokensCount").html("Token count: " + counter);
+
         let electrolightResults = $("#electrolightResults");
         electrolightResults.empty();
 
@@ -81,13 +85,15 @@ App = {
         //List out the tokenIds
         let tokenIdOptionsDestroy = $("#tokenIdDestroy");
         tokenIdOptionsDestroy.empty();
+        
 
-        for (let i = 1; i <= brawndoughCount; i++) {
+        for (let i = 1; i <= counter; i++) {
           brawndoughInstance.electrolights(i).then(function(electrolight) {
             let address = electrolight[0];
             let id = electrolight[1];
             let description = electrolight[2];
             let cost = electrolight[3];
+
 
             // Append Container struct items to electrolight board of nft tokens
             let electrolightTemplate = "<tr><th>" + address + "</th><td>" + id + "</td><td>" + description + "</td><td>" + cost
@@ -98,8 +104,30 @@ App = {
             tokenIdOptionsTransfer.append(tokenId);
             tokenIdOptionsClaim.append(tokenId);
             tokenIdOptionsDestroy.append(tokenId);
+          // });
+
           });
-        }
+          }
+
+        // for (let i = 1; i <= count; i++) {
+        //   brawndoughInstance.electrolights((i)).then(function(electrolight) {
+        //     let address = electrolight[0];
+        //     let id = electrolight[1];
+        //     let description = electrolight[2];
+        //     let cost = electrolight[3];
+
+
+        //     // Append Container struct items to electrolight board of nft tokens
+        //     let electrolightTemplate = "<tr><th>" + address + "</th><td>" + id + "</td><td>" + description + "</td><td>" + cost
+        //     electrolightResults.append(electrolightTemplate);
+
+        //     //Append Token ID options for selecting the Token ID to transfer, claim or destroy
+        //     let tokenId = "<option value='" + id + "' >" + id + "</ option>"
+        //     tokenIdOptionsTransfer.append(tokenId);
+        //     tokenIdOptionsClaim.append(tokenId);
+        //     tokenIdOptionsDestroy.append(tokenId);
+        //   });
+        // }
         }).catch(function(error) {
         console.warn(error);
       });

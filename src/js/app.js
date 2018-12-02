@@ -64,13 +64,11 @@ App = {
   
       //Load contract data
       App.contracts.Brawndough.deployed().then(function(instance) {
-        notUsedToken = "yay";
-        // $("#existingTokens").html("Your Existing token: " + notUsedToken);
         brawndoughInstance = instance;
-        return brawndoughInstance.getToken(0, { from: App.account });
+        return brawndoughInstance.getToken(1, {from:  App.account });
       }).then(function(getToken) {
         let [notUsedToken, counter] = getToken;
-        $("#existingTokens").html("Your Existing token: " + notUsedToken);
+        $("#existingTokens").html("Your First Existing token: " + notUsedToken);
         $("#existingTokensCount").html("Token count: " + counter);
 
         let electrolightResults = $("#electrolightResults");
@@ -88,16 +86,21 @@ App = {
         let tokenIdOptionsDestroy = $("#tokenIdDestroy");
         tokenIdOptionsDestroy.empty();
         
+        // let [a, b] = brawndoughInstance.getToken.call(0);
+        // // let [notUsedToken, counter] = getToken;
+        // $("#dude").html("Token count: " + a);
 
-        for (let i = 0; i <= counter; i++) {
-        brawndoughInstance.getToken().then(function(getToken) {
-          let [indexOutput, notUsedcounter] = BrawndoughInstance.getToken.call(i);
-          brawndoughInstance.electrolights(indexOutput).then(function(electrolight) {
+        for (let i = 1; i <= counter; i++) { 
+          App.contracts.Brawndough.deployed().then(function(instance) {
+            brawndoughInstance = instance;
+          return brawndoughInstance.getToken(i-1, {from:  App.account });
+          }).then(function(getToken){
+          let [a, b] = getToken;
+          brawndoughInstance.electrolights(a).then(function(electrolight) {
             let address = electrolight[0];
             let id = electrolight[1];
             let description = electrolight[2];
             let cost = electrolight[3];
-
 
             // Append Container struct items to electrolight board of nft tokens
             let electrolightTemplate = "<tr><th>" + address + "</th><td>" + id + "</td><td>" + description + "</td><td>" + cost
@@ -109,10 +112,8 @@ App = {
             tokenIdOptionsClaim.append(tokenId);
             tokenIdOptionsDestroy.append(tokenId);
           });
-
           });
-          }
-
+        }
         // for (let i = 1; i <= count; i++) {
         //   brawndoughInstance.electrolights((i)).then(function(electrolight) {
         //     let address = electrolight[0];
