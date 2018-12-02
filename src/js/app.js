@@ -65,7 +65,7 @@ App = {
       //Load contract data
       App.contracts.Brawndough.deployed().then(function(instance) {
         brawndoughInstance = instance;
-        return brawndoughInstance.getToken(1, {from:  App.account });
+        return brawndoughInstance.getToken(0, {from:  App.account });
       }).then(function(getToken) {
         let [notUsedToken, counter] = getToken;
         $("#existingTokens").html("Your First Existing token: " + notUsedToken);
@@ -90,10 +90,10 @@ App = {
         // // let [notUsedToken, counter] = getToken;
         // $("#dude").html("Token count: " + a);
 
-        for (let i = 1; i <= counter; i++) { 
+        for (let i = 0; i <= counter; i++) { 
           App.contracts.Brawndough.deployed().then(function(instance) {
             brawndoughInstance = instance;
-          return brawndoughInstance.getToken(i-1, {from:  App.account });
+          return brawndoughInstance.getToken(i, {from:  App.account });
           }).then(function(getToken){
           let [a, b] = getToken;
           brawndoughInstance.electrolights(a).then(function(electrolight) {
@@ -114,25 +114,6 @@ App = {
           });
           });
         }
-        // for (let i = 1; i <= count; i++) {
-        //   brawndoughInstance.electrolights((i)).then(function(electrolight) {
-        //     let address = electrolight[0];
-        //     let id = electrolight[1];
-        //     let description = electrolight[2];
-        //     let cost = electrolight[3];
-
-
-        //     // Append Container struct items to electrolight board of nft tokens
-        //     let electrolightTemplate = "<tr><th>" + address + "</th><td>" + id + "</td><td>" + description + "</td><td>" + cost
-        //     electrolightResults.append(electrolightTemplate);
-
-        //     //Append Token ID options for selecting the Token ID to transfer, claim or destroy
-        //     let tokenId = "<option value='" + id + "' >" + id + "</ option>"
-        //     tokenIdOptionsTransfer.append(tokenId);
-        //     tokenIdOptionsClaim.append(tokenId);
-        //     tokenIdOptionsDestroy.append(tokenId);
-        //   });
-        // }
         }).catch(function(error) {
         console.warn(error);
       });
