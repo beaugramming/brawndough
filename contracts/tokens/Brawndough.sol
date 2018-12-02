@@ -11,6 +11,8 @@ contract Brawndough is ERC721, Xcert, BurnableXcert  {
         uint256 tokenIdentifier;
         string description;
         uint256 cost;
+        address buyerAddress;
+        string status;
     }
     // Store Electrolight struct
     // Fetch Electrolight
@@ -19,10 +21,10 @@ contract Brawndough is ERC721, Xcert, BurnableXcert  {
     uint256 public brawndoughCount;
     //Initialize array of deletedtokenId to check for deletion otherwise delete
     uint256[] public existingTokenArray;
-    //Test of new mapping for entity logic below
+    //New mapping for entity logic below
     mapping(uint256 => Electrolight) public existingTokens;
 
-    // Minted, Destroyed, Transfer, claim events
+    // Minted, Destroyed, Transfer, buy, donate, events
     event brawndoughEvent(address indexed _owner);
 
     constructor()
@@ -39,8 +41,8 @@ contract Brawndough is ERC721, Xcert, BurnableXcert  {
         brawndoughCount ++;
         super._mint(_owner, brawndoughCount);
         super._setTokenUri(brawndoughCount, _uri);
-        electrolights[brawndoughCount] = Electrolight(_owner, brawndoughCount, _uri, _cost);
-        existingTokens[brawndoughCount] = Electrolight(_owner, brawndoughCount, _uri, _cost);
+        electrolights[brawndoughCount] = Electrolight(_owner, brawndoughCount, _uri, _cost, _owner, "received");
+        existingTokens[brawndoughCount] = Electrolight(_owner, brawndoughCount, _uri, _cost, _owner, "received");
         existingTokenArray.push(brawndoughCount);
         emit brawndoughEvent(_owner);
     }
@@ -79,4 +81,26 @@ contract Brawndough is ERC721, Xcert, BurnableXcert  {
         return (existingTokenArray[index], entityCount);
     }
 
+    //https://medium.com/coinmonks/smart-contracts-how-to-transfer-ether-ba464ec005c6
+    function () external payable {
+    }
+
+    function buyBrawndough (uint256 _tokenId) external payable returns(bool success) {
+        electrolights[_tokenId].status = "paid";
+        electrolights[_tokenId].buyerAddress = msg.sender;
+        return true;
+    }
+
+    function confirmBrawndough (uint256 _tokenId) public returns (bool) {
+        address destinationAddress = electrolights[_tokenId].owner;      
+        destinationAddress.transfer(electrolights[_tokenId].cost);
+        electrolights[_tokenId].status = "received";
+        return true;
+    }
+
+    function donateBrawndough (uint256 _tokenId, uint256 _donationAmount) public returns (bool) {
+        address destinationAddress = electrolights[_tokenId].owner;      
+        destinationAddress.transfer(_donationAmount);
+        return true;
+    }
 }

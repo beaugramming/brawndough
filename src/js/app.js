@@ -68,8 +68,8 @@ App = {
         return brawndoughInstance.getToken(0, {from:  App.account });
       }).then(function(getToken) {
         let [notUsedToken, counter] = getToken;
-        $("#existingTokens").html("Your First Existing token: " + notUsedToken);
-        $("#existingTokensCount").html("Token count: " + counter);
+        // $("#existingTokens").html("Your First Existing token: " + notUsedToken);
+        // $("#existingTokensCount").html("Token count: " + counter);
 
         let electrolightResults = $("#electrolightResults");
         electrolightResults.empty();
@@ -83,19 +83,29 @@ App = {
         tokenIdOptionsClaim.empty();
 
         //List out the tokenIds
+        let tokenIdOptionsBuy = $("#tokenIdBuy");
+        tokenIdOptionsBuy.empty();
+
+        //List out the tokenIds
+        let tokenIdOptionsConfirm = $("#tokenIdConfirm");
+        tokenIdOptionsConfirm.empty();
+        
+        //List out the tokenIds
+        let tokenIdOptionsDonate = $("#tokenIdDonate");
+        tokenIdOptionsDonate.empty();
+
+        //List out the tokenIds
         let tokenIdOptionsDestroy = $("#tokenIdDestroy");
         tokenIdOptionsDestroy.empty();
-        
-        // let [a, b] = brawndoughInstance.getToken.call(0);
-        // // let [notUsedToken, counter] = getToken;
-        // $("#dude").html("Token count: " + a);
 
         for (let i = 0; i <= counter; i++) { 
           App.contracts.Brawndough.deployed().then(function(instance) {
             brawndoughInstance = instance;
+
           return brawndoughInstance.getToken(i, {from:  App.account });
           }).then(function(getToken){
           let [a, b] = getToken;
+          
           brawndoughInstance.electrolights(a).then(function(electrolight) {
             let address = electrolight[0];
             let id = electrolight[1];
@@ -110,7 +120,10 @@ App = {
             let tokenId = "<option value='" + id + "' >" + id + "</ option>"
             tokenIdOptionsTransfer.append(tokenId);
             tokenIdOptionsClaim.append(tokenId);
+            tokenIdOptionsBuy.append(tokenId);
             tokenIdOptionsDestroy.append(tokenId);
+            tokenIdOptionsConfirm.append(tokenId);
+            tokenIdOptionsDonate.append(tokenId);
           });
           });
         }
@@ -145,13 +158,116 @@ App = {
     transferBrawndough: function() {
       var tokenId = $('#tokenIdTransfer').val();
       var address = $('#address').val();
-
+      
       App.contracts.Brawndough.deployed().then(function(instance) {
         return instance.transferBrawndough(App.account, address, tokenId, { from: App.account });
       }).then(function(result) {
       }).catch(function(err) {
         console.error(err);
       });
+    },
+
+    //Buy Brawndough
+    buyBrawndough: function() {
+      var brawndoughInstance;
+  
+      // Load account data
+      web3.eth.getCoinbase(function(err, account) {
+        if (err === null) {
+          App.account = account;
+        }
+      });
+
+      App.contracts.Brawndough.deployed().then(function(instance) {
+        brawndoughInstance = instance;
+        var i = $('#tokenIdBuy').val() - 1;
+      return brawndoughInstance.getToken(i, {from:  App.account });
+      }).then(function(getToken){
+      let [a, b] = getToken;
+      brawndoughInstance.electrolights(a).then(function(electrolight) {
+        // let address = electrolight[0];
+        let id = electrolight[1];
+        // let description = electrolight[2];
+        let cost = electrolight[3];
+
+        $("#costToken").html("Your Token to buy's cost: " + cost);
+      App.contracts.Brawndough.deployed().then(function(instance) {
+        return instance.buyBrawndough(id, { from: App.account, value:web3.toWei(cost, 'ether')}); 
+      }).then(function(result) {
+      }).catch(function(err) {
+        console.error(err);
+      });
+    });
+    });
+    },
+    
+    //Conirm Successful Brawndough Purchase
+    confirmBrawndough: function() {
+      var brawndoughInstance;
+  
+      // Load account data
+      web3.eth.getCoinbase(function(err, account) {
+        if (err === null) {
+          App.account = account;
+        }
+      });
+
+      App.contracts.Brawndough.deployed().then(function(instance) {
+        brawndoughInstance = instance;
+        var i = $('#tokenIdConfirm').val() - 1;
+      return brawndoughInstance.getToken(i, {from:  App.account });
+      }).then(function(getToken){
+      let [a, b] = getToken;
+      brawndoughInstance.electrolights(a).then(function(electrolight) {
+        let address = electrolight[0];
+        let id = electrolight[1];
+        // let description = electrolight[2];
+        // let cost = electrolight[3];
+
+        $("#boughtTokenAddress").html("Confirm this is your address: " + address);
+      App.contracts.Brawndough.deployed().then(function(instance) {
+        return instance.confirmBrawndough(id, { from: App.account });
+      }).then(function(result) {
+      }).catch(function(err) {
+        console.error(err);
+      });
+    });
+    });
+    },
+
+    //Donate Brawndough
+    donateBrawndough: function() {
+      var brawndoughInstance;
+
+      // Load account data
+      web3.eth.getCoinbase(function(err, account) {
+        if (err === null) {
+          App.account = account;
+          $("#accountAddress").html("Your Account: " + account);
+        }
+      });
+
+      App.contracts.Brawndough.deployed().then(function(instance) {
+        brawndoughInstance = instance;
+        var i = $('#tokenIdDonate').val() - 1;
+      return brawndoughInstance.getToken(i, {from:  App.account });
+      }).then(function(getToken){
+      let [a, b] = getToken;
+      let donationAmount = $('#donationAmount').val();
+      brawndoughInstance.electrolights(a).then(function(electrolight) {
+        let address = electrolight[0];
+        let id = electrolight[1];
+        // let description = electrolight[2];
+        // let cost = electrolight[3];
+
+      App.contracts.Brawndough.deployed().then(function(instance) {
+        return instance.donateBrawndough(App.account, id, donationAmount, { from: App.account });
+      }).then(function(result) {
+      }).catch(function(err) {
+        console.error(err);
+      });
+    });
+    });
     },
 
 };
