@@ -50,6 +50,7 @@ contract Brawndough is ERC721, Xcert, BurnableXcert  {
     function destroyBrawndough(address _owner, uint256 _tokenId)
     public
     {
+        require(electrolights[_tokenId].owner == msg.sender);
         super._burn(_owner, _tokenId);
         uint256 index = _tokenId - 1;
         uint256 keyToMove = existingTokenArray[existingTokenArray.length-1];
@@ -92,15 +93,11 @@ contract Brawndough is ERC721, Xcert, BurnableXcert  {
     }
 
     function confirmBrawndough (uint256 _tokenId) public returns (bool) {
+        require(electrolights[_tokenId].buyerAddress == msg.sender);
         address destinationAddress = electrolights[_tokenId].owner;      
         destinationAddress.transfer(electrolights[_tokenId].cost);
         electrolights[_tokenId].status = "received";
         return true;
     }
 
-    function donateBrawndough (uint256 _tokenId, uint256 _donationAmount) public returns (bool) {
-        address destinationAddress = electrolights[_tokenId].owner;      
-        destinationAddress.transfer(_donationAmount);
-        return true;
-    }
 }

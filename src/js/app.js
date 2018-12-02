@@ -219,12 +219,11 @@ App = {
       }).then(function(getToken){
       let [a, b] = getToken;
       brawndoughInstance.electrolights(a).then(function(electrolight) {
-        let address = electrolight[0];
+        // let address = electrolight[0];
         let id = electrolight[1];
         // let description = electrolight[2];
         // let cost = electrolight[3];
 
-        $("#boughtTokenAddress").html("Confirm this is your address: " + address);
       App.contracts.Brawndough.deployed().then(function(instance) {
         return instance.confirmBrawndough(id, { from: App.account });
       }).then(function(result) {
@@ -243,28 +242,25 @@ App = {
       web3.eth.getCoinbase(function(err, account) {
         if (err === null) {
           App.account = account;
-          $("#accountAddress").html("Your Account: " + account);
         }
       });
 
       App.contracts.Brawndough.deployed().then(function(instance) {
         brawndoughInstance = instance;
         var i = $('#tokenIdDonate').val() - 1;
+        
+        // $("#tokenDonation").html("Your Token to Donate's cost: " + donationAmount);
       return brawndoughInstance.getToken(i, {from:  App.account });
       }).then(function(getToken){
       let [a, b] = getToken;
-      let donationAmount = $('#donationAmount').val();
+      
       brawndoughInstance.electrolights(a).then(function(electrolight) {
-        let address = electrolight[0];
-        let id = electrolight[1];
-        // let description = electrolight[2];
-        // let cost = electrolight[3];
-
-      App.contracts.Brawndough.deployed().then(function(instance) {
-        return instance.donateBrawndough(App.account, id, donationAmount, { from: App.account });
-      }).then(function(result) {
-      }).catch(function(err) {
-        console.error(err);
+      let address = electrolight[0];
+      $("#tokenDonation").html("Your Tokens Donations owner's address: " + address);
+      let donationAmount = $('#tokenDonationAmount').val()
+      web3.eth.sendTransaction({to:address,from:App.account, value:web3.toWei(donationAmount, "ether")},function (err, res){
+      if (!err)
+        console.log(transactionHash); 
       });
     });
     });
@@ -277,4 +273,6 @@ App = {
       App.init();
     });
   });
+  
+
   

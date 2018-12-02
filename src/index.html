@@ -73,21 +73,21 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Confirm receipt of a Brawndough ERC721 NFT Coin by selecting Token ID</button>
                 <hr />
-              </form
-              <p id="boughtTokenAddress" class="text-center"></p>
+              </form>
               <form onSubmit="App.donateBrawndough(); return false;">
                 <div class="form-group">
-                  <label for="claim">Donate to a Brawndough ERC721 NFT Coin Owner by selecting Token ID</label>
+                  <label for="mintName">Donate to Brawndough ERC721 NFT Coin Owner</label>
                   <select class="form-control" id="tokenIdDonate">
                   </select>
                 </div>
                 <div class="form-group"
-                <label for ="donationAmount">Donation amount: (In Wei)</label>
-                <input type="number" id="donationAmount" step="1" min="0" class="form-control">
+                  <label for ="tokenDonationAmount">Enter Ether donation amount: (In Wei)</label>
+                  <input type="number" id="tokenDonationAmount" step="1" min="0" class="form-control">
                 </div>
-                <button type="submit" class="btn btn-primary">Donate to a Brawndough ERC721 NFT Coin Owner by selecting Token ID</button>
+                <button type="submit" class="btn btn-primary">Donate to Brawndough</button>
                 <hr />
-              </form
+              </form>
+              <p id="tokenDonation" class="text-center"></p>
               <form onSubmit="App.destroyBrawndough(); return false;">
                   <div class="form-group">
                     <label for="nameSelect">Destroy your Brawndough ERC721 NFT by selecting Token ID</label>
