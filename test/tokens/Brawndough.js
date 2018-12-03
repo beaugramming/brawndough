@@ -3,236 +3,96 @@ var Brawndough = artifacts.require("./Brawndough.sol");
 contract("Brawndough", function(accounts) {
   var BrawndoughInstance;
 
-  it("initializes with two candidates", function() {
-    return Election.deployed().then(function(instance) {
-      return instance.candidatesCount();
-    }).then(function(count) {
-      assert.equal(count, 2);
+  it("Throws an error for incorrect inputs to mintBrawndough cost variable, front end does not allow them also.", function() {
+    return Brawndough.deployed().then(function(instance) {
+      // Right Value should be string
+      // address value accounts[0]
+      let uri = "First Token Description" 
+      // Wrong Value should be uint256
+      let cost = "Not an integer"
+      return BrawndoughInstance.mintBrawndough(accounts[0], uri, cost, {from: accounts[0]});
+    }).then(assert.fail).catch(function(error) {
     });
   });
 
-  it("it initializes the candidates with the correct values", function() {
-    return Election.deployed().then(function(instance) {
-      electionInstance = instance;
-      return electionInstance.candidates(1);
-    }).then(function(candidate) {
-      assert.equal(candidate[0], 1, "contains the correct id");
-      assert.equal(candidate[1], "Candidate 1", "contains the correct name");
-      assert.equal(candidate[2], 0, "contains the correct votes count");
-      return electionInstance.candidates(2);
-    }).then(function(candidate) {
-      assert.equal(candidate[0], 2, "contains the correct id");
-      assert.equal(candidate[1], "Candidate 2", "contains the correct name");
-      assert.equal(candidate[2], 0, "contains the correct votes count");
+  it("Throws an error for incorrect inputs to mintBrawndough, uri variable, front end does not allow them also.", function() {
+    return Brawndough.deployed().then(function(instance) {
+      // Right Value should be uint256
+      // address value accounts[0]
+      let cost =  10
+      // Wrong Value should be string
+      let uri = 10
+      return BrawndoughInstance.mintBrawndough(accounts[0], uri, cost, {from: accounts[0]});
+    }).then(assert.fail).catch(function(error) {
     });
   });
-});
 
-
-    
-//Load contract data
-App.contracts.Brawndough.deployed().then(function(instance) {
-    brawndoughInstance = instance;
-    return brawndoughInstance.getToken(0, {from:  App.account });
-}).then(function(getToken) {
-    let [notUsedToken, counter] = getToken;
-    // $("#existingTokens").html("Your First Existing token: " + notUsedToken);
-    // $("#existingTokensCount").html("Token count: " + counter);
-
-    let electrolightResults = $("#electrolightResults");
-    electrolightResults.empty();
-
-    //List out the tokenIds
-    let tokenIdOptionsTransfer = $("#tokenIdTransfer");
-    tokenIdOptionsTransfer.empty();
-
-    //List out the tokenIds
-    let tokenIdOptionsClaim = $("#tokenIdClaim");
-    tokenIdOptionsClaim.empty();
-
-    //List out the tokenIds
-    let tokenIdOptionsBuy = $("#tokenIdBuy");
-    tokenIdOptionsBuy.empty();
-
-    //List out the tokenIds
-    let tokenIdOptionsConfirm = $("#tokenIdConfirm");
-    tokenIdOptionsConfirm.empty();
-    
-    //List out the tokenIds
-    let tokenIdOptionsDonate = $("#tokenIdDonate");
-    tokenIdOptionsDonate.empty();
-
-    //List out the tokenIds
-    let tokenIdOptionsDestroy = $("#tokenIdDestroy");
-    tokenIdOptionsDestroy.empty();
-
-    for (let i = 0; i <= counter; i++) { 
-    App.contracts.Brawndough.deployed().then(function(instance) {
-        brawndoughInstance = instance;
-
-    return brawndoughInstance.getToken(i, {from:  App.account });
-    }).then(function(getToken){
-    let [a, b] = getToken;
-    
-    brawndoughInstance.electrolights(a).then(function(electrolight) {
-        let address = electrolight[0];
-        let id = electrolight[1];
-        let description = electrolight[2];
-        let cost = electrolight[3];
-
-        // Append Container struct items to electrolight board of nft tokens
-        let electrolightTemplate = "<tr><th>" + address + "</th><td>" + id + "</td><td>" + description + "</td><td>" + cost
-        electrolightResults.append(electrolightTemplate);
-
-        //Append Token ID options for selecting the Token ID to transfer, claim or destroy
-        let tokenId = "<option value='" + id + "' >" + id + "</ option>"
-        tokenIdOptionsTransfer.append(tokenId);
-        tokenIdOptionsClaim.append(tokenId);
-        tokenIdOptionsBuy.append(tokenId);
-        tokenIdOptionsDestroy.append(tokenId);
-        tokenIdOptionsConfirm.append(tokenId);
-        tokenIdOptionsDonate.append(tokenId);
+  it("Throws an error for incorrect inputs to mintBrawndough, address variable, front end does not allow them also.", function() {
+    return Brawndough.deployed().then(function(instance) {
+      // Right Value should be uint256
+      let cost =  10
+      // Right Value should be string
+      let uri = "Token descriptor"
+      //address value should be address
+      let address = 0
+      return BrawndoughInstance.mintBrawndough(address, uri, cost, {from: accounts[0]});
+    }).then(assert.fail).catch(function(error) {
     });
+  });
+
+  it("Passes for correct inputs to mintBrawndough, functions, front end only allows them also.", function() {
+    return Brawndough.deployed().then(function(instance) {
+      // Right Value should be uint256
+      let cost =  10
+      // Right Value should be string
+      let uri = "Token descriptor"
+      //right value should be address
+      //address[0]
+      return BrawndoughInstance.mintBrawndough(address, uri, cost, {from: accounts[0]});
+    }).then(assert.pass).catch(function(error) {
     });
-    }
-    }).catch(function(error) {
-    console.warn(error);
+  });
+
+  it("Throws an error for incorrect inputs to destroyBrawndough, address variable, front end does not allow them also.", function() {
+    return Brawndough.deployed().then(function(instance) {
+      // Right Value should be uint256
+      let tokenId = 1  
+      //address value should be address[0]
+      let address = 0
+      return BrawndoughInstance.mintBrawndough(address, tokenId, {from: accounts[0]});
+    }).then(assert.fail).catch(function(error) {
+    });
+  });
+
+  it("Throws an error for incorrect inputs to destroyBrawndough, tokenId uint256 variable, front end does not allow them also.", function() {
+    return Brawndough.deployed().then(function(instance) {
+      // Value should be uint256
+      let tokenId = "Token descriptor"
+      //right value should be address
+      //address[0]
+      return BrawndoughInstance.destroyBrawndough(address[0], tokenId, {from: accounts[0]});
+    }).then(assert.fail).catch(function(error) {
+    });
+  });
+
+  it("Passes for correct inputs to mintBrawndough, functions, front end only allows them also.", function() {
+    return Brawndough.deployed().then(function(instance) {
+      // Right Value should be uint256
+      let tokenId =  1
+      //right value should be address
+      //address[0]
+      return BrawndoughInstance.destroyBrawndough(address[0], tokenId, {from: accounts[0]});
+    }).then(assert.pass).catch(function(error) {
+    });
+  });
+
+
+
+
+
+
+
 });
-},
-
-mintBrawndough: function() {
-let uri = $('#uri').val();
-let cost = $('#cost').val();
-
-App.contracts.Brawndough.deployed().then(function(instance) {
-    return instance.mintBrawndough(App.account, uri, cost, { from: App.account });
-}).then(function(result) {
-}).catch(function(err) {
-    console.error(err);
-});
-},
-
-destroyBrawndough: function() {
-var tokenId = $('#tokenIdDestroy').val();
-
-App.contracts.Brawndough.deployed().then(function(instance) {
-    return instance.destroyBrawndough(App.account, tokenId, { from: App.account });
-}).then(function(result) {
-}).catch(function(err) {
-    console.error(err);
-});
-},
-
-transferBrawndough: function() {
-var tokenId = $('#tokenIdTransfer').val();
-var address = $('#address').val();
-
-App.contracts.Brawndough.deployed().then(function(instance) {
-    return instance.transferBrawndough(App.account, address, tokenId, { from: App.account });
-}).then(function(result) {
-}).catch(function(err) {
-    console.error(err);
-});
-},
-
-//Buy Brawndough
-buyBrawndough: function() {
-var brawndoughInstance;
-
-// Load account data
-web3.eth.getCoinbase(function(err, account) {
-    if (err === null) {
-    App.account = account;
-    }
-});
-
-App.contracts.Brawndough.deployed().then(function(instance) {
-    brawndoughInstance = instance;
-    var i = $('#tokenIdBuy').val() - 1;
-return brawndoughInstance.getToken(i, {from:  App.account });
-}).then(function(getToken){
-let [a, b] = getToken;
-brawndoughInstance.electrolights(a).then(function(electrolight) {
-    // let address = electrolight[0];
-    let id = electrolight[1];
-    // let description = electrolight[2];
-    let cost = electrolight[3];
-
-    $("#costToken").html("Your Token to buy's cost: " + cost);
-App.contracts.Brawndough.deployed().then(function(instance) {
-    return instance.buyBrawndough(id, { from: App.account, value:web3.toWei(cost, 'ether')}); 
-}).then(function(result) {
-}).catch(function(err) {
-    console.error(err);
-});
-});
-});
-},
-
-//Conirm Successful Brawndough Purchase
-confirmBrawndough: function() {
-var brawndoughInstance;
-
-// Load account data
-web3.eth.getCoinbase(function(err, account) {
-    if (err === null) {
-    App.account = account;
-    }
-});
-
-App.contracts.Brawndough.deployed().then(function(instance) {
-    brawndoughInstance = instance;
-    var i = $('#tokenIdConfirm').val() - 1;
-return brawndoughInstance.getToken(i, {from:  App.account });
-}).then(function(getToken){
-let [a, b] = getToken;
-brawndoughInstance.electrolights(a).then(function(electrolight) {
-    // let address = electrolight[0];
-    let id = electrolight[1];
-    // let description = electrolight[2];
-    // let cost = electrolight[3];
-
-App.contracts.Brawndough.deployed().then(function(instance) {
-    return instance.confirmBrawndough(id, { from: App.account });
-}).then(function(result) {
-}).catch(function(err) {
-    console.error(err);
-});
-});
-});
-},
-
-//Donate Brawndough
-donateBrawndough: function() {
-var brawndoughInstance;
-
-// Load account data
-web3.eth.getCoinbase(function(err, account) {
-    if (err === null) {
-    App.account = account;
-    }
-});
-
-App.contracts.Brawndough.deployed().then(function(instance) {
-    brawndoughInstance = instance;
-    var i = $('#tokenIdDonate').val() - 1;
-    
-    // $("#tokenDonation").html("Your Token to Donate's cost: " + donationAmount);
-return brawndoughInstance.getToken(i, {from:  App.account });
-}).then(function(getToken){
-let [a, b] = getToken;
-
-brawndoughInstance.electrolights(a).then(function(electrolight) {
-let address = electrolight[0];
-$("#tokenDonation").html("Your Tokens Donations owner's address: " + address);
-let donationAmount = $('#tokenDonationAmount').val()
-web3.eth.sendTransaction({to:address,from:App.account, value:web3.toWei(donationAmount, "ether")},function (err, res){
-if (!err)
-    console.log(transactionHash); 
-});
-});
-});
-},
 
 
 
