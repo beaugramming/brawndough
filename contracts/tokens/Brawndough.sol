@@ -84,6 +84,12 @@ contract Brawndough is ERC721, Xcert, BurnableXcert  {
 
     //https://medium.com/coinmonks/smart-contracts-how-to-transfer-ether-ba464ec005c6
     function () external payable {
+        //Safety refund
+        msg.sender.transfer(msg.value);    
+    }
+
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
     }
 
     function buyBrawndough (uint256 _tokenId) external payable returns(bool success) {
@@ -95,7 +101,7 @@ contract Brawndough is ERC721, Xcert, BurnableXcert  {
     function confirmBrawndough (uint256 _tokenId) public returns (bool) {
         require(electrolights[_tokenId].buyerAddress == msg.sender);
         address destinationAddress = electrolights[_tokenId].owner;      
-        destinationAddress.transfer(electrolights[_tokenId].cost);
+        destinationAddress.transfer(electrolights[_tokenId].cost * 1000000000000000000);
         electrolights[_tokenId].status = "received";
         return true;
     }
