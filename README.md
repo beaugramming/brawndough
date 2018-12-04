@@ -60,50 +60,51 @@ Select confirm
 
 This will then display on the Electrolight token board:
 
-![Transfer](img/5.png)
+![Confirm](img/6.png)
 
 Transfer Brawndough by 
 Selecting the minted token by Token ID
 Entering the Address to transfer to and clicking Transfer Brawndough coin
+
 ![Board example 2](img/7.png)
-![Confirm](img/6.png)
 
 Select confirm
 
-
+![Board example](img/8.png)
 
 The Electrolight token board will update the address;
-![Board example](img/8.png)
+
+![Board example](img/9.png)
 
 Buy Brawndough by selecting the Token Id to buy then clicking buy:
 Then Select confirm, noting the correct price:
 
-
+![Confirm](img/10.png)
 
 This then stores itself in escrow in the contract
 
-![Board example](img/9.png)
+![Ganache less ether example](img/11.png)
 
 Once transferred you can then release funds to the owner:
 
-![Confirm](img/10.png)
+
 
 This will show up in Ganache
 
-![Ganache less ether example](img/11.png)
+![Destroy example](img/13.png)
 
 You can donate by selecting the Token ID and then entering a donation amount:
 Then clicking Donate Brawndough
-
+![Erased board example](img/14.png)
 ![Donate example](img/12.png)
 
 Lastly you can destroy the created Brawndough Coin:
 
-![Destroy example](img/13.png)
+
 
 Erasing the Electrolight Token Board
 
-![Erased board example](img/14.png)
+
 
 Subsequent coins minted will then receive a Token Id which increments by one, which is used on the backend logic to display the correct coins, and pull in the struct data from the solidity contract. Also there is an array, which uses a data structure, which enables a deleteable index example here are 3 coins:
 
