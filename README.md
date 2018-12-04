@@ -48,7 +48,7 @@ Step 7  Then visit this URL in your browser: http://localhost:3000
 Import your Ganache account into Metamask then login.
 Go to settings and enter for a Custom RPC url http:127.0.0.1:7545
 Reload the webpage you will see your account address listed:
-
+[Contribution guidelines for this project](img/1.png)
 Mint a token:
 Enter Description, which will be the tokenURI set for the Token.
 Enter Cost, which will be the cost in Ether for buying the token.
