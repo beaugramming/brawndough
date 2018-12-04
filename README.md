@@ -134,9 +134,7 @@ http://localhost:3000
 
 ![Board example](img/19.png)
 
-Beau Fujita CSIE 118 Final Project Code demonstration/walkthrough
-
-![alt text](http://i63.tinypic.com/2q3wsh3.png)
+## CSIE 118 Final Project Code demonstration/walkthrough
 
 DApp for Mechanical Turk, with varying bounties. 
 
