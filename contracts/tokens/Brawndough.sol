@@ -68,7 +68,6 @@ contract Brawndough is ERC721, Xcert, BurnableXcert  {
     function transferBrawndough(address _owner, address _to, uint256 _tokenId)
     public
     {
-        // super._approve(_to, _tokenId);
         super._safeTransferFrom(_owner, _to, _tokenId, "Token Transferred");
         electrolights[_tokenId].owner = _to;
         emit brawndoughEvent(_owner);
