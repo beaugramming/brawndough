@@ -44,48 +44,78 @@ Go to settings and enter for a Custom RPC url http:127.0.0.1:7545
 ![Metamask](img/1.png)
 
 Reload the webpage you will see your account address listed:
+
 ![Address](img/2.png)
+
 Mint a token:
 Enter Description, which will be the tokenURI set for the Token.
 Enter Cost, which will be the cost in Ether for buying the token.
 Select Mint Brawndough:
+
 ![Address](img/3.png)
+
 Select confirm
+
 ![Confirm mint](img/4.png)
+
 This will then display on the Electrolight token board:
+
 ![Board example](img/4.png)
+
 Transfer Brawndough by 
 Selecting the minted token by Token ID
 Entering the Address to transfer to and clicking Transfer Brawndough coin
+
 ![Transfer](img/5.png)
+
 Select confirm
+
 ![Confirm](img/6.png)
+
 The Electrolight token board will update the address;
 ![Board example 2](img/7.png)
+
 Buy Brawndough by selecting the Token Id to buy then clicking buy:
 Then Select confirm, noting the correct price:
+
 ![Board example](img/8.png)
+
 This then stores itself in escrow in the contract
+
 ![Board example](img/9.png)
+
 Once transferred you can then release funds to the owner:
+
 ![Confirm](img/10.png)
+
 This will show up in Ganache
+
 ![Ganache less ether example](img/11.png)
+
 You can donate by selecting the Token ID and then entering a donation amount:
 Then clicking Donate Brawndough
+
 ![Donate example](img/12.png)
+
 Lastly you can destroy the created Brawndough Coin:
+
 ![Destroy example](img/13.png)
+
 Erasing the Electrolight Token Board
+
 ![Erased board example](img/14.png)
+
 Subsequent coins minted will then receive a Token Id which increments by one, which is used on the backend logic to display the correct coins, and pull in the struct data from the solidity contract. Also there is an array, which uses a data structure, which enables a deleteable index example here are 3 coins:
+
 ![Delete example](img/15.png)
 Destroying 2 then displays only 1 and 3
 ![Board example deleteable index](img/15.png)
-One bug of Metamask is that some transactions fail due to an incorrect account nonce, when reloading the application, and switching accounts this can be fixed by selecting reset account:
+
 ![Board example](img/16.png)
 ![Board example](img/17.png)
 ![Board example](img/18.png)
+
+One bug of Metamask is that some transactions fail due to an incorrect account nonce, when reloading the application, and switching accounts this can be fixed by selecting reset account:
 ![Board example](img/19.png)
 
 
