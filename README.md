@@ -87,7 +87,7 @@ This then stores itself in escrow in the contract
 
 Once transferred you can then release funds to the owner:
 
-
+![Delete example](img/15.png)
 
 This will show up in Ganache
 
@@ -96,23 +96,21 @@ This will show up in Ganache
 You can donate by selecting the Token ID and then entering a donation amount:
 Then clicking Donate Brawndough
 ![Erased board example](img/14.png)
+
+
+Lastly you can destroy the created Brawndough Coin, erasing the Electrolight Token Board:
+
 ![Donate example](img/12.png)
-
-Lastly you can destroy the created Brawndough Coin:
-
-
-
-Erasing the Electrolight Token Board
-
-
 
 Subsequent coins minted will then receive a Token Id which increments by one, which is used on the backend logic to display the correct coins, and pull in the struct data from the solidity contract. Also there is an array, which uses a data structure, which enables a deleteable index example here are 3 coins:
 
-![Delete example](img/15.png)
+![Board example](img/16.png)
+
 Destroying 2 then displays only 1 and 3
+
 ![Board example deleteable index](img/15.png)
 
-![Board example](img/16.png)
+
 ![Board example](img/17.png)
 ![Board example](img/18.png)
 
