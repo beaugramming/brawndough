@@ -1,19 +1,23 @@
 
-Brawndough Code Explanations and User guide
+## Brawndough Code Explanations and User guide
 ![Brawndough workflow example](img/Brawndough.png)
-#Installation Steps Follow the steps below to download, install, and run this project.
+## Installation Steps Follow the steps below to download, install, and run this project.
 
-Dependencies
+## Dependencies
+```
 Install these prerequisites to follow along with the tutorial. See free video tutorial or a full explanation of each prerequisite.
 NPM: https://nodejs.org
 Truffle: https://github.com/trufflesuite/truffle
 Ganache: http://truffleframework.com/ganache/
 Metamask: https://metamask.io/
-
-Step 1. Clone the project
+```
+## Step 1. Clone the project
+```
 git clone https://github.com/beaugramming/brawndough.git
+```
 
-Step 2. Install dependencies
+## Step 2. Install dependencies
+```
 cd brawndough
 npm install -g truffle
 npm install @0xcert/ethereum-xcert
@@ -21,22 +25,34 @@ npm install
 npm install lite-server --save-dev
 npm run compile
 npm run dev 
+```
 
-Step 3. Start Ganache
-Open the Ganache GUI client that you downloaded and installed. This will start your local blockchain instance. See free video tutorial for full explanation.
+## Step 3. Start Ganache
+```
+Open the Ganache GUI client that you downloaded and installed. This will start your local blockchain instance.
+```
 
-Step 4. Compile & Deploy Brawndough Smart Contract
-$ truffle migrate --reset 
+## Step 4. Compile & Deploy Brawndough Smart Contract
+```
+truffle migrate --reset 
+```
 
-Step 5. Configure Metamask
+## Step 5. Configure Metamask
+```
 Unlock Metamask
 Connect metamask to your local Etherum blockchain provided by Ganache.
 Import an account provided by ganache.
+```
 
-Step 6. Run the Front End Application,
+## Step 6. Run the Front End Application,
+```
 npm run dev
+```
 
-Step 7  Then visit this URL in your browser: http://localhost:3000
+## Step 7  Then visit this URL in your browser: 
+```
+http://localhost:3000
+```
 
 Import your Ganache account into Metamask then login.
 Go to settings and enter for a Custom RPC url http:127.0.0.1:7545
@@ -74,7 +90,7 @@ Select confirm
 
 The Electrolight token board will update the address;
 
-![Board example](img/9.png)
+![Board example](img/9.png) 
 
 Buy Brawndough by selecting the Token Id to buy then clicking buy:
 Then Select confirm, noting the correct price:
@@ -108,13 +124,14 @@ Subsequent coins minted will then receive a Token Id which increments by one, wh
 
 Destroying 2 then displays only 1 and 3
 
-![Board example deleteable index](img/15.png)
-
-
 ![Board example](img/17.png)
+
+Displaying only 1 and 3,on the Electrolight board
+
 ![Board example](img/18.png)
 
 One bug of Metamask is that some transactions fail due to an incorrect account nonce, when reloading the application, and switching accounts this can be fixed by selecting reset account:
+
 ![Board example](img/19.png)
 
 
