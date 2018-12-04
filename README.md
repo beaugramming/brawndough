@@ -60,17 +60,17 @@ Select confirm
 
 This will then display on the Electrolight token board:
 
-![Board example](img/4.png)
+![Transfer](img/5.png)
 
 Transfer Brawndough by 
 Selecting the minted token by Token ID
 Entering the Address to transfer to and clicking Transfer Brawndough coin
 
-![Transfer](img/5.png)
+![Confirm](img/6.png)
 
 Select confirm
 
-![Confirm](img/6.png)
+
 
 The Electrolight token board will update the address;
 ![Board example 2](img/7.png)
