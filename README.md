@@ -65,7 +65,7 @@ This will then display on the Electrolight token board:
 Transfer Brawndough by 
 Selecting the minted token by Token ID
 Entering the Address to transfer to and clicking Transfer Brawndough coin
-
+![Board example 2](img/7.png)
 ![Confirm](img/6.png)
 
 Select confirm
@@ -73,12 +73,12 @@ Select confirm
 
 
 The Electrolight token board will update the address;
-![Board example 2](img/7.png)
+![Board example](img/8.png)
 
 Buy Brawndough by selecting the Token Id to buy then clicking buy:
 Then Select confirm, noting the correct price:
 
-![Board example](img/8.png)
+
 
 This then stores itself in escrow in the contract
 
