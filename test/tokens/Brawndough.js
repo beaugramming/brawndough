@@ -75,9 +75,9 @@ contract("Brawndough", function(accounts) {
     });
   });
 
-  it("Passes for correct inputs to mintBrawndough, functions, front end only allows them also.", function() {
+  it("Passes for correct inputs to destroyBrawndough, functions, front end only allows them also.", function() {
     return Brawndough.deployed().then(function(instance) {
-      // Right Value should be uint256
+      // Value should be uint256
       let tokenId =  1
       //right value should be address
       //address[0]
@@ -87,16 +87,78 @@ contract("Brawndough", function(accounts) {
   });
 
 
+  it("Should transfer 10 Ether to the Brawndough contract", async () => {
+    let instance = await Brawndough.deployed();
+    let account0 = accounts[0];
+    let cost = 10;
+    //equals ether amount of balance in wei
+    const etherdeposited = cost * 1000000000000000000;
+    await instance.buyBrawndough(1, {from: account0, value:web3.toWei(cost, 'ether')});
 
+    let balance = await instance.getBalance();
+    assert.strictEqual(balance.toNumber(), etherdeposited);
 
+  });
 
+  it("Should transfer 10 Ether to the Owner's Address", async () => {
+    let instance = await Brawndough.deployed();
+    let account0 = accounts[0];
+    let account1 = accounts[1];
+    let brawndoughoriginalbalance = await instance.getBalance();
+    await instance.mintBrawndough(account1, "Token of the brawndough", 10, {from: account1});
 
+    let originalaccount1balance = await web3.eth.getBalance(account1); 
 
-});
+    let cost = 10;
+    //equals ether amount of balance in wei
+    const etherwithdrawn = cost * 1000000000000000000;
 
+    await instance.buyBrawndough(1, {from: account0, value:web3.toWei(cost, 'ether')}); 
 
+    await instance.confirmBrawndough(1, {from: account0});
 
+    let currentaccount0balance = await web3.eth.getBalance(account1);
+    assert.strictEqual(originalaccount1balance.toNumber() + etherwithdrawn, currentaccount0balance.toNumber());
+  
+    let brawndoughcurrentbalance = await instance.getBalance();
+    assert.strictEqual(brawndoughcurrentbalance.toNumber(), brawndoughoriginalbalance.toNumber());
+  });
 
+  it("Should transfer a token from the owner's Address to the correct address.", async () => {
+    let instance = await Brawndough.deployed();
+    let account0 = accounts[0];
+    let account1 = accounts[1];
+
+    await instance.mintBrawndough(account1, "Token of the brawndough", 10, {from: account1});
+
+    await instance.transferBrawndough(account1, account0, 1, {from: account1}); 
+    const tokenaddress = await instance.electrolights.call(1);
+    let token1address = tokenaddress[0]; 
+    assert.strictEqual(token1address, account0);
+
+  });
+
+    
+  it("Get token function should return, correct token ID and count.", async () => {
+    let instance = await Brawndough.deployed();
+    let account1 = accounts[1];
+    
+    await instance.mintBrawndough(account1, "Token of the brawndough", 10, {from: account1});
+    await instance.mintBrawndough(account1, "Token of the brawndough 2", 10, {from: account1});
+    await instance.mintBrawndough(account1, "Token of the brawndough 3", 10, {from: account1});
+    await instance.destroyBrawndough(account1, 2, {from: account1});
+
+    let getTokenAndCount = await instance.getToken(0); 
+    let [a, b] = getTokenAndCount;
+
+    for (let i = 0; i <= b; i++) {   
+      const tokenId = await instance.electrolights.call(a);
+      let tokenidofindex = tokenId[1]; 
+      assert.strictEqual(tokenidofindex.toNumber(), a.toNumber());
+  }
+  });
+
+})
     
   
     
